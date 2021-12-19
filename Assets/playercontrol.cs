@@ -7,21 +7,19 @@ public class playercontrol : MonoBehaviour
     public Rigidbody myRigidbody;
     public ImagePosition myposition;
     public new GameObject camera;
-    public float velocityX = 10f;
+    public float velocityXf;
     public float velocityY = 10f;
-    public float velocityZ = 10f;
+    public float velocityZ;
     public float x_sensi = 100f;
     public float y_sensi = 100f;
-    public float mainSPEED = 1 ;
+    public float mainSPEED = 0.2f ;
+    public float inputVelocityX;
+    public float inputVelocityY = 0;
+    public float inputVelocityZ;
+    public bool grounded;
     void Start()
     {
-        this.myRigidbody = GetComponent<Rigidbody>();
-        Transform myTransform = this.transform;
-        Vector3 myposition = myTransform.position;
-        myposition.x = 0f;
-        myposition.y = 1f;
-        myposition.z = 0f;
-        myTransform.position = myposition;
+        Application.targetFrameRate = 60;
     }
 
     // Update is called once per frame
@@ -32,28 +30,23 @@ public class playercontrol : MonoBehaviour
     }
     void playermove()       //プレイヤーの動き
     {
-        float inputVelocityX = 0;
-        float inputVelocityY = 0;
-        float inputVelocityZ = 0;
         Vector3 myscale;
         myscale = gameObject.transform.localScale;
-        Transform myTransform = this.transform;
-        Vector3 myposition = myTransform.position;
         Transform trans = transform;
         transform.position = trans.position;
-        trans.position += trans.TransformDirection(Vector3.forward) * Input.GetAxis("Vertical") * mainSPEED;
-        trans.position += trans.TransformDirection(Vector3.right) * Input.GetAxis("Horizontal") * mainSPEED;
+        trans.position += trans.TransformDirection(Vector3.forward) * Input.GetAxis("Vertical") * this.mainSPEED;
+        trans.position += trans.TransformDirection(Vector3.right) * Input.GetAxis("Horizontal") * this.mainSPEED;
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             myscale.y -= 0.3f;
-            myposition.y -= 0.3f;
+            this.mainSPEED -= 0.05f;
         }
         if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             myscale.y += 0.3f;
-            myposition.y += 0.3f;
+            this.mainSPEED += 0.05f;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && this.transform.position.y < 2f)
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             inputVelocityY = this.velocityY;
         }
@@ -61,10 +54,10 @@ public class playercontrol : MonoBehaviour
         {
             inputVelocityY = this.myRigidbody.velocity.y;
         }
-        this.myRigidbody.velocity = new Vector3(inputVelocityX, inputVelocityY, inputVelocityZ);
+        this.myRigidbody.velocity = new Vector3(0, inputVelocityY,0);
         gameObject.transform.localScale = myscale;
     }
-    void playercamera()
+    void playercamera()     //カメラの動き
     {
         float x_Rotation = Input.GetAxis("Mouse X");
         float y_Rotation = Input.GetAxis("Mouse Y");
@@ -72,5 +65,20 @@ public class playercontrol : MonoBehaviour
         y_Rotation = y_Rotation * y_sensi;
         this.transform.Rotate(0, x_Rotation, 0);
         camera.transform.Rotate(-y_Rotation, 0, 0);
+    }
+    
+    void OnCollisionStay(Collision other)
+    {
+        foreach (ContactPoint contact in other.contacts)
+        {
+            if (Vector2.Angle(contact.normal, Vector3.up) < 60)
+            {
+                grounded = true;
+            }
+        }
+    }
+    void OnCollisionExit()
+    {
+        grounded = false;
     }
 }
