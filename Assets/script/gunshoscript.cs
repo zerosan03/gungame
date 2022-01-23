@@ -116,6 +116,6 @@ public class gunshoscript : MonoBehaviour
         }
         reloading.fillAmount = reloadtime/ fastreloadtime;
         reloadtime -= reloadtimecounter;
-        this.gunbulletText.GetComponent<Text>().text = fastgunbullet + "/" + gunbullet;
+        this.gunbulletText.GetComponent<Text>().text = gunbullet + "/" + fastgunbullet;
     }
 }
