@@ -105,7 +105,7 @@ public class playercontrol : MonoBehaviour
         cameraAngle.z = 0;
         camera.transform.localEulerAngles = cameraAngle;
     }
-    void playerskill()
+    void playerskill()      //スキルの動き
     {
         Transform trans = transform;
         if (Input.GetButtonDown("skill1") && skilltimecounter >= skilltime / 3)

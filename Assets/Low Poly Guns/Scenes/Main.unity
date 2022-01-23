@@ -1730,8 +1730,8 @@ MonoBehaviour:
   velocityXf: 0
   velocityY: 10
   velocityZ: 0
-  x_sensi: 5
-  y_sensi: 5
+  x_sensi: 1
+  y_sensi: 1
   mainSPEED: 10
   inputVelocityX: 0
   inputVelocityY: 0
