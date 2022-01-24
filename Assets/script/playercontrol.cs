@@ -23,8 +23,9 @@ public class playercontrol : MonoBehaviour
     public float inputVelocityZ;
     public float skilltime = 450;
     public float skilltimecounter;
-    public int skillrigidity = 20;
-    public int skillrigiditycounter ;
+    public int skillrigidity = 25;
+    public int skillrigiditycounter;
+    public int fastskillrigiditycounter;
     public bool grounded;
     public bool collision;
     public Vector3 cameraAngle;
@@ -39,8 +40,12 @@ public class playercontrol : MonoBehaviour
     void Update()
     {
         playermove();
-        playercamera();
+        
         playerskill();
+    }
+    void LateUpdate()
+    {
+        playercamera();
     }
     void playermove()       //プレイヤーの動き
     {
@@ -107,7 +112,8 @@ public class playercontrol : MonoBehaviour
     }
     void playerskill()      //スキルの動き
     {
-        Transform trans = transform;
+        Transform trans = camera.transform;
+        fastskillrigiditycounter = skillrigiditycounter;
         if (Input.GetButtonDown("skill1") && skilltimecounter >= skilltime / 3)
         {
             skillrigiditycounter = skillrigidity;
@@ -122,6 +128,10 @@ public class playercontrol : MonoBehaviour
         else
         {
             skillicon.color = new Color32(255, 255, 255, 150);
+        }
+        if (fastskillrigiditycounter - skillrigiditycounter == 1 && skillrigiditycounter < 1)
+        {
+            this.myRigidbody.velocity = new Vector3(0, 0, 0);
         }
         if (skilltimecounter < skilltime)
         {

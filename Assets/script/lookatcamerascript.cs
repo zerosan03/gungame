@@ -7,7 +7,7 @@ public class lookatcamerascript : MonoBehaviour
     public GameObject targetObject; 
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         this.transform.LookAt(targetObject.transform);
     }

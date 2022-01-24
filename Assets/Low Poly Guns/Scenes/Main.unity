@@ -1738,8 +1738,9 @@ MonoBehaviour:
   inputVelocityZ: 0
   skilltime: 450
   skilltimecounter: 450
-  skillrigidity: 20
+  skillrigidity: 25
   skillrigiditycounter: 0
+  fastskillrigiditycounter: 0
   grounded: 0
   collision: 0
   cameraAngle: {x: 0, y: 0, z: 0}
