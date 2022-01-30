@@ -9,12 +9,9 @@ public class playercontrol : MonoBehaviour
     [SerializeField] Image skilltimegauge2;
     [SerializeField] Image skillicon;
     public Rigidbody myRigidbody;
-    public ImagePosition myposition;
     public GameObject skillcounterText;
     public new GameObject camera;
-    public float velocityXf;
     public float velocityY = 10f;
-    public float velocityZ;
     public float x_sensi = 100f;
     public float y_sensi = 100f;
     public float mainSPEED = 0.2f ;
@@ -53,17 +50,7 @@ public class playercontrol : MonoBehaviour
         myscale = gameObject.transform.localScale;
         Transform trans = transform;
         transform.position = trans.position;
-        
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            myscale.y -= 0.3f;
-            this.mainSPEED -= 2f;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            myscale.y += 0.3f;
-            this.mainSPEED += 2f;
-        }
+
         if (Input.GetButtonDown("Jump") && grounded)
         {
             inputVelocityY = this.velocityY;
@@ -83,7 +70,6 @@ public class playercontrol : MonoBehaviour
             inputVelocityZ = Input.GetAxis("Vertical") * mainSPEED;
         }
         this.myRigidbody.velocity = trans.TransformDirection(new Vector3(inputVelocityX, inputVelocityY, inputVelocityZ));
-        gameObject.transform.localScale = myscale;
     }
 
     void playercamera()     //カメラの動き
