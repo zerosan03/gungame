@@ -8,8 +8,10 @@ public class playercontrol : MonoBehaviour
     [SerializeField] Image skilltimegauge1;
     [SerializeField] Image skilltimegauge2;
     [SerializeField] Image skillicon;
+    [SerializeField] Image HPgauge;
     public Rigidbody myRigidbody;
     public GameObject skillcounterText;
+    public GameObject playerHPText;
     public new GameObject camera;
     public float velocityY = 10f;
     public float x_sensi = 100f;
@@ -20,6 +22,9 @@ public class playercontrol : MonoBehaviour
     public float inputVelocityZ;
     public float skilltime = 450;
     public float skilltimecounter;
+    public float playerHP = 100;
+    public float HPr;
+    public float HPg;
     public int skillrigidity = 25;
     public int skillrigiditycounter;
     public int fastskillrigiditycounter;
@@ -37,8 +42,8 @@ public class playercontrol : MonoBehaviour
     void Update()
     {
         playermove();
-        
         playerskill();
+        HPmove();
     }
     void LateUpdate()
     {
@@ -46,8 +51,6 @@ public class playercontrol : MonoBehaviour
     }
     void playermove()       //プレイヤーの動き
     {
-        Vector3 myscale;
-        myscale = gameObject.transform.localScale;
         Transform trans = transform;
         transform.position = trans.position;
 
@@ -126,8 +129,8 @@ public class playercontrol : MonoBehaviour
         if (skilltimecounter >= skilltime)
         {
             this.skillcounterText.GetComponent<Text>().color = new Color32(0, 255, 0, 150);
-            skilltimegauge1.color = new Color32(0, 255, 0, 150);
-            skilltimegauge2.color = new Color32(255, 255, 0, 150);
+            skilltimegauge1.color = new Color32(0, 255, 0, 200);
+            skilltimegauge2.color = new Color32(255, 255, 0, 200);
             skilltimegauge1.fillAmount = 1;
         }
         else if (skilltimecounter >= (skilltime / 3 * 2))
@@ -153,6 +156,31 @@ public class playercontrol : MonoBehaviour
         }
         this.skillcounterText.GetComponent<Text>().text = "" + (int)skilltimecounter / (int)(skilltime / 3);
     }
+    void HPmove()           //HPが減った時の処理
+    {
+        HPgauge.fillAmount = (playerHP / 100);
+        if (playerHP >= 75)
+        {
+            HPg = 1;
+            HPr = 4 - playerHP / 25;
+        }
+        else if (playerHP >= 25)
+        {
+            HPg = (playerHP-25) / 50;
+            HPr = 1;
+        }
+        else
+        {
+            HPg = 0;
+            HPr = 1;
+        }
+        if (playerHP < 0)
+        {
+            playerHP = -1;
+        }
+        HPgauge.color = new Color(HPr, HPg, 0);
+        playerHPText.GetComponent<Text>().color = new Color(HPr, HPg, 0);
+    }
 
     void OnCollisionStay(Collision other)
     {
@@ -163,17 +191,20 @@ public class playercontrol : MonoBehaviour
                 grounded = true;
             }
         }
-        if (other.collider.tag == "building")
-        {
-            collision = true;
-        }
     }
     void OnCollisionExit(Collision other)
     {
         grounded = false;
-        if (other.collider.tag == "building")
+    }
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.collider.tag == "shell")
         {
-            collision = false;
+            playerHP -= 10;
+        }
+        if (other.collider.tag == "iron")
+        {
+            playerHP -= 15;
         }
     }
 }

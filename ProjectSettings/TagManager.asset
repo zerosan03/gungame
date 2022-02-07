@@ -8,6 +8,10 @@ TagManager:
   - BulletSpawn
   - building
   - Enemy
+  - shell
+  - summon
+  - iron
+  - turret
   layers:
   - Default
   - TransparentFX

@@ -51,7 +51,7 @@ public class gunshoscript : MonoBehaviour
             //hitに取得した情報の内、タグ名を取得
             string hitTagName = hit.transform.gameObject.tag;
             //タグ名がEnemyだった場合
-            if (hitTagName == "Enemy")
+            if (hitTagName == "turret")
             {
                 //Enemyタグのオブジェクトにrayが当たった時の照準の色
                 sight.color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
@@ -59,7 +59,31 @@ public class gunshoscript : MonoBehaviour
                 if (Input.GetMouseButton(0) && gunbullet > 0 && shotcounter <= 0)
                 {
                     //Enemyオブジェクトに付いているEnemyHPのReceveDamage関数を呼び出す
-                    hit.collider.GetComponent<EnemyHP>().ReceveDamage(damageScore);
+                    hit.collider.GetComponent<turretEnemyHP>().ReceveDamage(damageScore);
+                    hittime = 5;
+                }
+            }
+            else if(hitTagName == "iron")
+            {
+                //Enemyタグのオブジェクトにrayが当たった時の照準の色
+                sight.color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+                //マウスの左ボタンがクリックされたら
+                if (Input.GetMouseButton(0) && gunbullet > 0 && shotcounter <= 0)
+                {
+                    //Enemyオブジェクトに付いているEnemyHPのReceveDamage関数を呼び出す
+                    hit.collider.GetComponent<ironEnemyHP>().ReceveDamage(damageScore);
+                    hittime = 5;
+                }
+            }
+            else if (hitTagName == "summon")
+            {
+                //Enemyタグのオブジェクトにrayが当たった時の照準の色
+                sight.color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+                //マウスの左ボタンがクリックされたら
+                if (Input.GetMouseButton(0) && gunbullet > 0 && shotcounter <= 0)
+                {
+                    //Enemyオブジェクトに付いているEnemyHPのReceveDamage関数を呼び出す
+                    hit.collider.GetComponent<summonEnemyHP>().ReceveDamage(damageScore);
                     hittime = 5;
                 }
             }
