@@ -181,6 +181,10 @@ public class playercontrol : MonoBehaviour
         HPgauge.color = new Color(HPr, HPg, 0);
         playerHPText.GetComponent<Text>().color = new Color(HPr, HPg, 0);
     }
+    public void irondamage(float Lv)
+    {
+        playerHP -= 10 + Lv * 5;
+    }
 
     void OnCollisionStay(Collision other)
     {
@@ -201,10 +205,6 @@ public class playercontrol : MonoBehaviour
         if (other.collider.tag == "shell")
         {
             playerHP -= 10;
-        }
-        if (other.collider.tag == "iron")
-        {
-            playerHP -= 15;
         }
     }
 }

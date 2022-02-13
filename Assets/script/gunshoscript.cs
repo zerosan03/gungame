@@ -71,7 +71,7 @@ public class gunshoscript : MonoBehaviour
                 if (Input.GetMouseButton(0) && gunbullet > 0 && shotcounter <= 0)
                 {
                     //Enemyオブジェクトに付いているEnemyHPのReceveDamage関数を呼び出す
-                    hit.collider.GetComponent<ironEnemyHP>().ReceveDamage(damageScore);
+                    hit.collider.GetComponent<ironscript>().ReceveDamage(damageScore);
                     hittime = 5;
                 }
             }
