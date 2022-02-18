@@ -9,9 +9,11 @@ public class playercontrol : MonoBehaviour
     [SerializeField] Image skilltimegauge2;
     [SerializeField] Image skillicon;
     [SerializeField] Image HPgauge;
+    [SerializeField] Image gameoverbackscreen;
     public Rigidbody myRigidbody;
     public GameObject skillcounterText;
     public GameObject playerHPText;
+    public GameObject gameoverText;
     public new GameObject camera;
     public float velocityY = 10f;
     public float x_sensi = 100f;
@@ -25,11 +27,13 @@ public class playercontrol : MonoBehaviour
     public float playerHP = 100;
     public float HPr;
     public float HPg;
+    public byte gameoverbackscreencoler;
     public int skillrigidity = 25;
     public int skillrigiditycounter;
     public int fastskillrigiditycounter;
     public bool grounded;
     public bool collision;
+    public bool gameover;
     public Vector3 cameraAngle;
     void Start()
     {
@@ -41,13 +45,13 @@ public class playercontrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playermove();
-        playerskill();
+        if (gameover == false)
+        {
+            playermove();
+            playerskill();
+            playercamera();
+        }
         HPmove();
-    }
-    void LateUpdate()
-    {
-        playercamera();
     }
     void playermove()       //プレイヤーの動き
     {
@@ -177,6 +181,22 @@ public class playercontrol : MonoBehaviour
         if (playerHP < 0)
         {
             playerHP = -1;
+            if (gameoverbackscreencoler < 255)
+            {
+                gameoverbackscreencoler += 1;
+            }
+            else
+            {
+                gameoverText.GetComponent<Text>().text = "GAMEOVER";
+            }
+            gameoverbackscreen.color = new Color32(0, 0, 0, gameoverbackscreencoler);
+            camera.GetComponent<gunshoscript>().Gameover();
+            gameover = true;
+        }
+        else
+        {
+            gameoverbackscreencoler = 0;
+            gameover = false;
         }
         HPgauge.color = new Color(HPr, HPg, 0);
         playerHPText.GetComponent<Text>().color = new Color(HPr, HPg, 0);
