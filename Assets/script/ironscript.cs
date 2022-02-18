@@ -53,6 +53,16 @@ public class ironscript : MonoBehaviour
     {
         random = getrandom;
         Lv = getLv;
+        if (myrandom < random)
+        {
+            Destroy(this.gameObject);
+        }
+        else if (myrandom != random)
+        {
+            myLv = myLv + Lv;
+            maxenemyHP = firstenemyHP + myLv * 2 - 2;
+            enemyHP = maxenemyHP;
+        }
     }
     public void ReceveDamage(int damageScore)
     {
@@ -74,16 +84,6 @@ public class ironscript : MonoBehaviour
         if (other.collider.tag == "iron")
         {
             other.collider.GetComponent<ironscript>().Lvdelete(myrandom,myLv);
-            if (myrandom < random)
-            {
-                Destroy(this.gameObject);
-            }
-            if (myrandom != random)
-            {
-                myLv = myLv + Lv;
-                maxenemyHP = firstenemyHP + myLv * 2 - 2;
-                enemyHP = maxenemyHP;
-            }
         }
     }
 }
