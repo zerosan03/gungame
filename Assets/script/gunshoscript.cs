@@ -90,6 +90,18 @@ public class gunshoscript : MonoBehaviour
                         hittime = 5;
                     }
                 }
+                else if (hitTagName == "target")
+                {
+                    //Enemyタグのオブジェクトにrayが当たった時の照準の色
+                    sight.color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+                    //マウスの左ボタンがクリックされたら
+                    if (Input.GetMouseButton(0) && gunbullet > 0 && shotcounter <= 0)
+                    {
+                        //Enemyオブジェクトに付いているEnemyHPのReceveDamage関数を呼び出す
+                        hit.collider.GetComponent<targetscript>().ReceveDamage(damageScore);
+                        hittime = 5;
+                    }
+                }
                 else
                 {
                     //Enemyタグ以外のオブジェクトにrayが当たった時の照準の色

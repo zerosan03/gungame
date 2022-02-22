@@ -12,6 +12,7 @@ TagManager:
   - summon
   - iron
   - turret
+  - target
   layers:
   - Default
   - TransparentFX

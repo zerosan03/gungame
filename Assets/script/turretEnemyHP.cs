@@ -7,12 +7,15 @@ using UnityEngine.UI;
 public class turretEnemyHP : MonoBehaviour
 {
     [SerializeField] Image HPgauge;
+    public GameObject clearflag;
+    public float counter = 1;
     float enemyHP = 10;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        clearflag = GameObject.Find("clearflag");
+        clearflag.GetComponent<gameclearscript>().enemycounter(counter);
     }
 
     // Update is called once per frame
@@ -29,6 +32,7 @@ public class turretEnemyHP : MonoBehaviour
         {
             //このスクリプトがアタッチされているオブジェクトを消す
             Destroy(this.gameObject);
+            clearflag.GetComponent<gameclearscript>().enemycounter(-counter);
         }
     }
 }

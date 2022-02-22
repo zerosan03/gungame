@@ -16,8 +16,8 @@ public class playercontrol : MonoBehaviour
     public GameObject gameoverText;
     public new GameObject camera;
     public float velocityY = 10f;
-    public float x_sensi = 100f;
-    public float y_sensi = 100f;
+    public float x_sensi = 1f;
+    public float y_sensi = 1f;
     public float mainSPEED = 0.2f ;
     public float inputVelocityX;
     public float inputVelocityY = 0;

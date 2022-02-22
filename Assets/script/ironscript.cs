@@ -8,6 +8,7 @@ public class ironscript : MonoBehaviour
     [SerializeField] Image HPgauge;
     public GameObject targetObject;
     public GameObject Lvtext;
+    public GameObject clearflag;
     public Rigidbody myRigidbody;
     public Vector3 myscale;
     public float velocityZ = 0;
@@ -19,10 +20,13 @@ public class ironscript : MonoBehaviour
     public float enemyHP = 5;
     public float firstenemyHP;
     public float maxenemyHP;
+    public float counter = 1;
     private void Start()
     {
         myrandom = Random.Range(0.1f, 9999.9f);
         targetObject = GameObject.Find("Player");
+        clearflag = GameObject.Find("clearflag");
+        clearflag.GetComponent<gameclearscript>().enemycounter(counter);
         maxenemyHP = enemyHP;
         firstenemyHP = maxenemyHP;
     }
@@ -56,6 +60,7 @@ public class ironscript : MonoBehaviour
         if (myrandom < random)
         {
             Destroy(this.gameObject);
+            clearflag.GetComponent<gameclearscript>().enemycounter(-counter);
         }
         else if (myrandom != random)
         {
@@ -72,6 +77,7 @@ public class ironscript : MonoBehaviour
         {
             //このスクリプトがアタッチされているオブジェクトを消す
             Destroy(this.gameObject);
+            clearflag.GetComponent<gameclearscript>().enemycounter(-counter);
         }
     }
     private void OnCollisionEnter(Collision other)
